@@ -12,8 +12,6 @@ const Sauce = require('../models/Sauce');
 // CREATE SAUCE
 exports.createSauce = (req, res) => {
     const sauceObject = JSON.parse(req.body.sauce);
-    delete sauceObject._id;
-    delete sauceObject._userId;
     // Création de l'objet Sauce
     const sauce = new Sauce({
         ...sauceObject,

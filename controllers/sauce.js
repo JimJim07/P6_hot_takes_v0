@@ -12,6 +12,7 @@ const Sauce = require('../models/Sauce');
 // CREATE SAUCE
 exports.createSauce = (req, res) => {
     const sauceObject = JSON.parse(req.body.sauce);
+    console.log(sauceObject);
     // Création de l'objet Sauce
     const sauce = new Sauce({
         ...sauceObject,
@@ -30,7 +31,6 @@ exports.createSauce = (req, res) => {
 // MODIFY SAUCE
 exports.modifySauce = (req, res) => {
     if (req.file) {
-        delete sauceObject._userId;
         Sauce.findOne({ _id: req.params.id })
             .then(sauce => {
                 if (sauce.userId != req.auth.userId) {
@@ -52,7 +52,6 @@ exports.modifySauce = (req, res) => {
             .catch(error => res.status(500).json({ error }));
     } else {
         const sauceObject = { ...req.body };
-        delete sauceObject._userId;
         Sauce.findOne({ _id: req.params.id })
             .then(sauce => {
                 if (sauce.userId != req.auth.userId) {
@@ -106,7 +105,6 @@ exports.getAllSauces = (req, res) => {
 
 // POST LIKE SAUCE
 exports.postLikeSauce = (req, res) => {
-    console.log(req.body);
     
     switch (req.body.like) {
         case 1 :
